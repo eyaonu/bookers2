@@ -13,3 +13,18 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap";
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+
+main {
+  margin-top: 70px;
+}
+
+label {
+  display: block;
+}
+
+.devise-h2 {
+  padding-left: 15px;
+}
