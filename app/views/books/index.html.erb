@@ -1,9 +1,19 @@
+<% @books.each do |book| %>
+  <tr>
+  <td><%= link_to user_path(book.user.id) do %>
+    <%= image_tag @user.get_profile_image(100,100) %><% end %></td>
+  <td><%= link_to book.title, book %></td>
+  <td><%= book.body %></td>
+<!--             <% if book.user == current_user %>
+  <td><%= link_to 'Edit', edit_book_path(book) %></td>
+  <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% end %> -->
 
-  <% if @bookn.errors.any? %>
+<% if @book.errors.any? %>
     <div id="error_explanation">
-      <h2><%= @bookn.errors.count %>errors prohibited this obj from being saved:</h2>
+      <h2><%= @book.errors.count %>errors prohibited this obj from being saved:</h2>
       <ul>
-      <% @bookn.errors.full_messages.each do |message| %>
+      <% @book.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -16,7 +26,7 @@
 
     <h1>User Info</h1>
         <h3 class="profile-name"><%= @user.name %></h3>
-     <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %>
+          <%= image_tag @user.get_profile_image(100,100) %>
 
      <div class="profile-edit">
       <table class="t">
@@ -52,15 +62,6 @@
       </thead>
 
       <tbody>
-        <% @books.each do |book| %>
-          <tr>
-            <td><%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
-            <td><%= link_to book.title, book %></td>
-            <td><%= book.body %></td>
-<!--             <% if book.user == current_user %>
-            <td><%= link_to 'Edit', edit_book_path(book) %></td>
-            <td><%= link_to 'Destroy', book, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-            <% end %> -->
           </tr>
         <% end %>
       </tbody>
@@ -74,15 +75,15 @@
 
 
     <!-- 投稿 -->
-    <h2> New book</h2>
+    <h2> New book </h2>
 
-    <%= form_for(@bookn) do |f| %>
+    <%= form_with model: @book do |f| %>
 
 
-        <h4> Title</h4>
+        <h4> Title </h4>
         <%= f.text_field :title %>
 
-        <h4> Opinion</h4>
+        <h4> Opinion </h4>
         <%= f.text_area :body %>
 
         <%= f.submit 'Create Book' %>
