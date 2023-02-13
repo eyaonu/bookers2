@@ -1,10 +1,10 @@
 <% if @user.errors %>
-        <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-        </ul>
-      <% end %>
+  <ul>
+<% @user.errors.full_messages.each do |message| %>
+  <li><%= message %></li>
+<% end %>
+  </ul>
+<% end %>
 
 <div class="box">
 <h2>User_Info</h2>

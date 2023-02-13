@@ -32,9 +32,11 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
-      @books = Book.all
-      flash[:notice]= ' errors prohibited this obj from being saved:'
-      render "edit"
+    if @book.user == current_user
+      render :edit
+    else
+      redirect_to books_path
+    end
   end
 
   def update
@@ -44,6 +46,7 @@ class BooksController < ApplicationController
     flash[:notice] = "You have creatad book successfully."
     redirect_to  book_path(@book.id)
     else
+    render :edit
     end
   end
 
@@ -51,16 +54,19 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
       if @book.destroy
       flash[:notice]="Book was successfully destroyed."
-      redirect_to '/lists'
+      redirect_to '/books'
       end
+  end
 
 private
   def book_params
     params.require(:book).permit(:title, :body)
   end
 
-  def user_params
-    params.require(:book).permit(:name,:profile_image,:introduction)
+  def correct_user
+    @book = Book.find(params[:id])
+    @user = @book.user
+    redirect_to(books_path) unless @user == current_user
   end
 
   def ensure_current_user
@@ -68,6 +74,5 @@ private
     unless @book.user_id == current_user.id
     redirect_to books_path
     end
-  end
   end
 end
